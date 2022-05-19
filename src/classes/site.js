@@ -4,6 +4,7 @@ export class Site {
   }
 
   render(model) {
+    this.$el.innerHTML = ''
     model.forEach(block => { //проходимся по каждому модульному/шаблонному объекту в массиве с шаблонами
       this.$el.insertAdjacentHTML('beforeend', block.toHTML())
     })

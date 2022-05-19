@@ -1,7 +1,5 @@
 import '@styles/scss/styles.scss'
 import { model } from './plugins/model.js'
-import { Site } from './classes/site.js'
+import { App } from './classes/app.js'
 
-const site = new Site('#site')
-
-site.render(model)
+new App(model).init()
