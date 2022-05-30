@@ -38,7 +38,7 @@ export class ColumnsBlock extends Block {
   }
 
   toHTML() {
-    // const html = block.value.map(item => col(item)).join('')
+    // const html = this.value.map(item => col(item)).join('')
     const html = this.value.map(col).join('') //идентично строке выше (короткий синтаксис)
     return row(html, css(this.options.styles))
   }

@@ -1,22 +1,15 @@
 @import "~normalize.css";
-// @import "header/header.scss";
-// @import "fonts/fonts.scss";
-
-// body {
-//   background-color: rgb(27, 27, 27);
-//   color: wheat;
-// }
 
 #app {
   position: relative;
 }
 
-.content {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 200px;
-}
+// .content {
+//   position: absolute;
+//   top: 0;
+//   right: 0;
+//   left: 200px;
+// }
 
 .sidebar {
   position: fixed;
@@ -25,11 +18,80 @@
   left: 0;
   width: 200px;
   z-index: 100;
-  padding: 10px;
+  padding: 10px 5px;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   overflow-y: auto;
+  transition: .3s;
 
-  .form-group {
-    padding-bottom: 15px;
+  .btn-sidebar {
+    position: fixed;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+    line-height: 1;
+    margin-left: 63px;
+    transition: .3s;
+  }
+
+  form {
+    position: relative;
+    overflow: hidden;
+    max-height: 300px;
+    transition: 0.3s;
+
+    &.hidden {
+      max-height: 25px;
+
+      .wrapButtons {
+        opacity: 0;
+      }
+    }
+
+    h5 {
+      cursor: pointer;
+    }
+
+    .wrapButtons {
+      opacity: 1;
+      position: absolute;
+      top: 3px;
+      right: 0;
+      transition: 0.3s;
+
+      .btn-secondary {
+        width: 23px;
+        height: 23px;
+        line-height: 1;
+        padding: 0;
+        margin-left: 0;
+      }
+    }
+
+    .form-group {
+      padding-bottom: 15px;
+    }
+
+    button {
+      margin-bottom: 5px;
+    }
+
+    h5,
+    .form-group,
+    button {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+
+  form[name='title'] {
+    margin-top: 35px;
+  }
+}
+
+.sidebar-hidden {
+  width: 0;
+  padding: 0;
+
+  .btn-sidebar {
+    margin: 10px;
   }
 }
