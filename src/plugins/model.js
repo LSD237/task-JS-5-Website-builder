@@ -44,7 +44,7 @@ export const model = [
     styles: {
       background: "linear-gradient(to left, #f2994a, #f2c94c)",
       padding: "1rem",
-      "font-weight": "bold",
+      "font-weight": "bold"
     }
   })
 ]

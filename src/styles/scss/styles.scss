@@ -25,11 +25,17 @@
 
   .btn-sidebar {
     position: fixed;
+    z-index: 101;
     padding: 0.3rem;
     font-size: 0.8rem;
     line-height: 1;
     margin-left: 63px;
     transition: .3s;
+  }
+
+  .btn-Delete,
+  .btn-Return {
+    margin-left: 15px;
   }
 
   form {

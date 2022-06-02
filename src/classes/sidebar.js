@@ -1,10 +1,13 @@
-import { btnSidebar, block, blockImage, blockColumns, colInput } from "../plugins/utils"
+import { btnSidebar, btnDelOrBack, block, blockImage, blockColumns, colInput } from "../plugins/utils"
 import { TextBlock, TitleBlock, ColumnsBlock, ImageBlock } from "./blocks.js"
 
 export class Sidebar {
-  constructor(selector, updateCallback) {
+  constructor(selector, updateCallback, delReturnBlock, site) {
     this.$el = document.querySelector(selector)
     this.update = updateCallback
+    this.delReturnBlock = delReturnBlock
+    this.site = site
+    this.arrDeletedBlocks = []
     this.count = 2
 
     this.init()
@@ -12,9 +15,10 @@ export class Sidebar {
 
   init() {
     this.$el.insertAdjacentHTML('afterbegin', this.template)
-    this.$el.addEventListener('submit', this.formHandler.bind(this)) //* привязка контекста(".bind(this)")
+    this.$el.addEventListener('submit', this.formHandler.bind(this)) //* привязка контекста(".bind(this)") для корректной работы обработчика
     this.$el.addEventListener('click', this.rollUpHundler.bind(this))
     this.$el.addEventListener('click', this.btnColPlusMinusHadler.bind(this))
+    this.$el.addEventListener('click', this.btnDelReturnHadler.bind(this))
   }
 
   get template() {
@@ -23,7 +27,9 @@ export class Sidebar {
       block('title'),
       block('text'),
       blockColumns('columns'),
-      blockImage('image')
+      blockImage('image'),
+      btnDelOrBack('Delete'),
+      btnDelOrBack('Return')
     ].join('')
   }
 
@@ -81,8 +87,7 @@ export class Sidebar {
   rollUpHundler(event) {
     if (event.target.classList.contains('btn-sidebar')) {
       this.$el.classList.toggle('sidebar-hidden')
-    }
-    if (event.target.tagName != 'H5') return
+    } else if (event.target.tagName != 'H5') return
     event.target.parentElement.classList.toggle('hidden')
   }
 
@@ -90,12 +95,26 @@ export class Sidebar {
     if (event.target.id == 'btnColPlus') {
       if (this.count > 4) return
       this.$el.querySelector('#colFormStyles').insertAdjacentHTML('beforebegin', colInput(this.count++))
-    }
-    if (event.target.id == 'btnColMinus') {
+    } else if (event.target.id == 'btnColMinus') {
       if (this.count < 3) return
       this.$el.querySelector(`.colInput-${--this.count}`).remove()
     }
   }
-}
 
-//? Сделать кнопку Del для удаления последнего, добавленного, эл-та
+  btnDelReturnHadler(event) {
+    if (event.target.classList.contains('btn-Return')) {
+      if (!this.arrDeletedBlocks.length) return
+      let lastBlock = this.arrDeletedBlocks.pop()
+      document.querySelector(this.site).insertAdjacentHTML('beforeend', lastBlock)
+      this.delReturnBlock('Return')
+    }
+
+    if (!event.target.classList.contains('btn-Delete')) return
+    if (document.querySelector(this.site).lastChild) {
+      let deletedLastBlock = document.querySelector(this.site).lastChild
+      this.arrDeletedBlocks.push(deletedLastBlock.outerHTML)
+      deletedLastBlock.remove()
+      this.delReturnBlock('Del')
+    }
+  }
+}

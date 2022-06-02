@@ -4,6 +4,7 @@ import { Sidebar } from "./sidebar.js"
 export class App {
   constructor(model) {
     this.model = model
+    this.arrWithBlocks = []
   }
 
   init() {
@@ -16,6 +17,15 @@ export class App {
       site.render(this.model)
     }
 
-    new Sidebar('#panel', updateCallback)
+    let delReturnBlock = (string) => {
+      if (string == 'Del') {
+        this.arrWithBlocks.push(this.model.pop())
+      } else if (string == 'Return') {
+        if (!this.arrWithBlocks.length) return
+        this.model.push(this.arrWithBlocks.pop())
+      }
+    }
+
+    new Sidebar('#panel', updateCallback, delReturnBlock, '#site')
   }
 }

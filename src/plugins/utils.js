@@ -16,6 +16,14 @@ export function btnSidebar() {
   return '<button class="btn btn-outline-secondary btn-sidebar">Sidebar</button>'
 }
 
+export function btnDelOrBack(type) {
+  let btnClass = 'btn-outline-primary'
+  if (type == 'Delete') {
+    btnClass = 'btn-outline-danger'
+  }
+  return `<button class="btn ${btnClass} btn-${type}">${type}</button>`
+}
+
 export function block(type) {
   return `
     <form name="${type}" class="hidden">
